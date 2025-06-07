@@ -99,17 +99,8 @@ var Demo;
                     }
                 });
             }
-            goBack() {
-                window.history.back();
-            }
-            logout() {
-                alert("You have been logged out.");
-                window.location.href = "index.html";
-            }
         }
         Typescript.AdminCategory = AdminCategory;
     })(Typescript = Demo.Typescript || (Demo.Typescript = {}));
 })(Demo || (Demo = {}));
-const admin = new Demo.Typescript.AdminCategory();
-window.goBack = () => admin.goBack();
-window.logout = () => admin.logout();
+new Demo.Typescript.AdminCategory();

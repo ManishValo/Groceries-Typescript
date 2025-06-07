@@ -63,5 +63,3 @@ var Demo;
 })(Demo || (Demo = {}));
 // Initialize the class
 new Demo.UserDetails.AdminUserDetails();
-window.goBack = () => admin.goBack();
-window.logout = () => admin.logout();

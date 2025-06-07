@@ -7,7 +7,10 @@ var Demo;
             constructor() {
                 this.Base_url = "http://localhost:58731/api/category";
                 () => {
+                    this.loadProducts();
                 };
+            }
+            loadProducts() {
             }
         }
         Admin.Adminproduct = Adminproduct;

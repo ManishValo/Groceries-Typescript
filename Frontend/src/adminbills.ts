@@ -72,14 +72,7 @@ namespace Demo {
                 });
             }
 
-            goBack(): void {
-                window.history.back();
-            }
-
-            logout(): void {
-                alert("Logged out.");
-                window.location.href = "index.html";
-            }
+            
         }
 
         // Global instance to allow access from onclick="..."

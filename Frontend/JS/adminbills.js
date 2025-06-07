@@ -68,13 +68,6 @@ var Demo;
                     }
                 });
             }
-            goBack() {
-                window.history.back();
-            }
-            logout() {
-                alert("Logged out.");
-                window.location.href = "index.html";
-            }
         }
         Typescript.BillManager = BillManager;
         // Global instance to allow access from onclick="..."

@@ -67,5 +67,3 @@ namespace Demo {
 
 // Initialize the class
 new Demo.UserDetails.AdminUserDetails();
-(window as any).goBack = () => admin.goBack();
-(window as any).logout = () => admin.logout();

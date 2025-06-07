@@ -105,18 +105,9 @@ namespace Demo {
                 });
             }
 
-             goBack() {
-                window.history.back();
-            }
 
-            logout() {
-                alert("You have been logged out.");
-                window.location.href = "index.html";
-            }
         }
     }
 }
 
-const admin=new Demo.Typescript.AdminCategory();
-(window as any).goBack = () => admin.goBack();
-(window as any).logout = () => admin.logout();
+new Demo.Typescript.AdminCategory();
