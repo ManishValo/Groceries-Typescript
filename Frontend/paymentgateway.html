@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Form</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top px-3">
+    <img src="./Images/logo-removebg-preview.png" alt="logo" style="width: 60px; height: 60px;">
+    <a class="navbar-brand ms-2" href="index.html">BiGBasket</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+      </ul>
+      <ul class="navbar-nav align-items-center text-white">
+        <li class="nav-item d-flex align-items-center" id="user-section" style="cursor: pointer;">
+          <i class="fa fa-user fs-5 me-2"></i>
+          <span id="user-text"></span>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Payment Form -->
+  <main class="container py-5" style="max-width: 644px; border: 1px solid black; margin-top: 20px; border-radius: 5px;">
+    <h2 class="mb-4">Payment Form</h2>
+    <p id="user-display-info" class="mb-4"></p>
+
+    <form id="payment-form">
+      <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="full-name" class="form-label">Full Name:</label>
+            <input type="text" class="form-control" id="full-name" placeholder="Enter Full Name">
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter Email">
+          </div>
+          <div class="mb-3">
+            <label for="contact" class="form-label">Contact Number:</label>
+            <input type="text" class="form-control" id="contact" placeholder="Contact Number">
+          </div>
+
+          <div class="mb-3">
+            <label for="address" class="form-label">Address:</label>
+            <textarea class="form-control" id="address" rows="3" placeholder="Enter your address..."></textarea>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="city" class="form-label">City:</label>
+              <input type="text" class="form-control" id="city" placeholder="City">
+            </div>
+            <div class="col">
+              <label for="pincode" class="form-label">Pincode:</label>
+              <input type="text" class="form-control" id="pincode" placeholder="Pincode">
+            </div>
+          </div>
+
+          
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Payment Method:</label><br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="payment" id="credit" value="credit">
+              <label class="form-check-label" for="credit">Credit Card</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="payment" id="debit" value="debit">
+              <label class="form-check-label" for="debit">Debit Card</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Name on Card:</label>
+            <input type="text" class="form-control" id="name" placeholder="Name on Card">
+          </div>
+
+          <div class="mb-3">
+            <label for="cardnumber" class="form-label">Card Number:</label>
+            <input type="text" class="form-control" id="cardnumber" placeholder="Card Number">
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="cvv" class="form-label">CVV:</label>
+              <input type="text" class="form-control" id="cvv" placeholder="CVV">
+            </div>
+            <div class="col">
+              <label for="cardexpiry" class="form-label">Card Expiry:</label>
+              <input type="month" class="form-control" id="cardexpiry" min="2025-05">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="otp" class="form-label">OTP:</label>
+            <input type="text" class="form-control" id="otp" placeholder="Enter OTP">
+          </div>
+
+          <button type="button" id="pay-btn" class="btn btn-primary w-100">Proceed Payment</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./JS/payment.js"></script>
+</body>
+
+</html>

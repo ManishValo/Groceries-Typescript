@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Groceries</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    .product-card {
+      width: 18%;
+      background-color: white;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 400px;
+      margin: 10px 10px;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+
+    .product-img { 
+      width: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      
+    }
+
+    .nav-link {
+      color: white;
+    }
+
+    .category-navbar {
+      background-color: #f8f9fa;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .category-navbar .nav-link {
+      color: #333;
+      font-weight: 500;
+    }
+
+    .category-navbar .nav-link:hover {
+      color: #007bff;
+    }
+
+    .add-to-cart-btn {
+      background-color: #fc955b;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: rgb(231, 166, 136);
+    }
+    #adCarousel{
+      width: 80%;
+    }
+    #product-container{
+      margin: 0px 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top px-3">
+    <img src="./Images/logo-removebg-preview.png" alt="logo" style="width: 60px; height: 60px;">
+    <a class="navbar-brand" href="index.html">BiGBasket</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="categoriesDropdown" id="category-dropdown">
+            <!-- Categories will be inserted here by JS -->
+          </ul>
+        </li>
+      </ul>
+
+      <form class="d-flex mx-3" role="search" onsubmit="return false;">
+        <input class="form-control me-2" type="search" placeholder="Search....." aria-label="Search" id="search-input">
+        <button class="btn btn-outline-light" type="submit" disabled><i class="fas fa-search"></i></button>
+      </form>
+      
+      
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item position-relative me-3">
+          <a class="nav-link" href="cart.html" id="cart-link">
+            <i class="fa fa-cart-plus fs-5"></i>
+            <span id="cart-count"
+              style="display:none; position:absolute; top:0; right:0; background:red; color:white; border-radius:50%; padding:2px 6px; font-size:12px;">
+            </span>
+          </a>
+        </li>
+
+        <li class="nav-item d-flex align-items-center text-white" id="user-section" style="cursor: pointer;">
+          <i class="fa fa-user fs-5 me-2"></i>
+          <span id="user-text"></span>
+        </li>
+       
+      </ul>
+    </div>
+  </nav>
+  <!-- Advertisement Carousel -->
+<div id="adCarousel" class="carousel slide my-3 container shadow-sm rounded" data-bs-ride="carousel">
+  <div class="carousel-inner rounded">
+    <div class="carousel-item active">
+      <img src="./Images/startquik_br_fl_web_2224_1400x400.webp" class="d-block w-100" alt="Ad 1" style="max-height: 280px; object-fit: contain;">
+    </div>
+    <div class="carousel-item">
+      <img src="./Images/starquik_summerfl25_1400x400.webp" class="d-block w-100" alt="Ad 2" style="max-height: 280px; object-fit: contain;">
+    </div>
+    <div class="carousel-item">
+      <img src="./Images/starquik_fl_web_halfprice_1400x400.webp" class="d-block w-100" alt="Ad 3" style="max-height: 280px; object-fit: contain;">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#adCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#adCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+  <!-- Category Navbar -->
+  <!-- <nav class="navbar category-navbar justify-content-center">
+    <ul class="nav">
+      <li class="nav-item"><a class="nav-link category-trigger" data-category="Fruits" href="#">Fruits</a></li>
+      <li class="nav-item"><a class="nav-link category-trigger" data-category="Vegetables" href="#">Vegetables</a></li>
+      <li class="nav-item"><a class="nav-link category-trigger" data-category="Dairy Products" href="#">Dairy
+          Products</a></li>
+      <li class="nav-item"><a class="nav-link category-trigger" data-category="Sprouts & Mixes" href="#">Sprouts &
+          Mixes</a></li>
+      <li class="nav-item"><a class="nav-link category-trigger" data-category="Soft Drinks & Juices" href="#">Soft
+          Drinks & Juices</a></li>
+    </ul>
+  </nav> -->
+
+  <!-- Category Images Section -->
+  <div class="container my-4">
+    <div class="row justify-content-center" id="category-images" style="margin-bottom: -40px;">
+      <!-- Fruits -->
+      <div class="col-md-2 mx-2 mb-4">
+        <div class="card category-card h-100 shadow-sm" data-category="Fruits" style="cursor:pointer;">
+          <img src="./Images/Fruits.webp" class="card-img-top" alt="Fruits" style="height: 130px; object-fit: cover;">
+          <div class="card-body text-center">
+            <h6 class="card-title mb-0">Fruits</h6>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vegetables -->
+      <div class="col-md-2 mx-2 mb-4">
+        <div class="card category-card h-100 shadow-sm" data-category="Vegetables" style="cursor:pointer;">
+          <img src="./Images/Vegetables.webp" class="card-img-top" alt="Vegetables"
+            style="height: 130px; object-fit: cover;">
+          <div class="card-body text-center">
+            <h6 class="card-title mb-0">Vegetables</h6>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dairy Products -->
+      <div class="col-md-2 mx-2 mb-4">
+        <div class="card category-card h-100 shadow-sm" data-category="Dairy Products" style="cursor:pointer;">
+          <img src="./Images/Dairy.webp" class="card-img-top" alt="Dairy Products"
+            style="height: 130px; object-fit: cover;">
+          <div class="card-body text-center">
+            <h6 class="card-title mb-0">Dairy Products</h6>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sprouts & Mixes -->
+      <div class="col-md-2 mx-2 mb-4">
+        <div class="card category-card h-100 shadow-sm" data-category="Sprouts & Mixes" style="cursor:pointer;">
+          <img src="./Images/Sprouts and Mixed.webp" class="card-img-top" alt="Sprouts & Mixes"
+            style="height: 130px; object-fit: cover;">
+          <div class="card-body text-center">
+            <h6 class="card-title mb-0">Sprouts & Mixes</h6>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soft Drinks & Juices -->
+      <div class="col-md-2 mx-2 mb-4">
+        <div class="card category-card h-100 shadow-sm" data-category="Soft Drinks & Juices" style="cursor:pointer;">
+          <img src="./Images/Soft Drinks and Juices.webp" class="card-img-top" alt="Soft Drinks & Juices"
+            style="height: 130px; object-fit: cover;">
+          <div class="card-body text-center">
+            <h6 class="card-title mb-0">Soft Drinks & Juices</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Cards Section -->
+  <div class="container my-5">
+    <div class="row" id="product-container">
+      <!-- Products will be injected via JS -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-4 mt-5">
+    <div class="container text-center">
+      <p class="mb-1">&copy; 2025 BiGBasket. All rights reserved.</p>
+      <p class="mb-0">
+        <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
+        <a href="#" class="text-light text-decoration-none">Terms of Service</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./JS/app.js"></script>
+
+</body>
+
+</html>

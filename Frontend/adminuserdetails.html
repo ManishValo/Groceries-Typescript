@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>User Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      display: flex;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background: #989a9b;
+      color: rgb(253, 0, 0);
+      padding-top: 20px;
+      position: fixed;
+    }
+    .sidebar a {
+      color: rgb(255, 253, 253);
+      padding: 10px 20px;
+      display: block;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background: #1f2020;
+    }
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+    }
+    .topbar {
+      background: #d8dadb;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #282829;
+    }
+    .content {
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4 class="text-center">Admin Panel</h4>
+    <a href="adminuserdetails.html">User Details</a>
+    <a href="admincategory.html">Product Categories</a>
+    <a href="adminproducts.html">Products</a>
+    <a href="adminbills.html">Bill Details</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <div class="topbar">
+      <button class="btn btn-outline-primary" onclick="goBack()">⬅ Back</button>
+      <button class="btn btn-outline-danger" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="content">
+      <h3>User Details</h3>
+
+      <!-- Add New User Button -->
+      <!-- <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">➕ Add New User</button> -->
+
+      <!-- User Table -->
+      <table class="table table-bordered" id="userTable">
+        <thead class="table-light">
+          <tr>
+            <th>UserID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>User Type</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--  Add New User -->
+  <!-- <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="userForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-2">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" id="userName" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="userEmail" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" id="userPassword" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Mobile No</label>
+            <input type="text" class="form-control" id="mobileNo">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">User Type</label>
+            <select class="form-select" id="typeId" required>
+              <option value="">Select Type</option>
+              <option value="1">Admin</option>
+              <option value="2">Customer</option>
+            </select>
+          </div> -->
+
+          <!-- Extra fields for customer -->
+          <!-- <div id="customerFields" style="display: none;">
+            <div class="mb-2">
+              <label class="form-label">Address</label>
+              <input type="text" class="form-control" id="address">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control" id="city">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Pincode</label>
+              <input type="text" class="form-control" id="pincode">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Create User</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div> -->
+
+  <!--  View User Details -->
+<div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewUserModalLabel">User Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>UserID:</strong> <span id="viewUserID"></span></p>
+        <p><strong>Name:</strong> <span id="viewUserName"></span></p>
+        <p><strong>Email:</strong> <span id="viewUserEmail"></span></p>
+        <p><strong>Mobile No:</strong> <span id="viewMobileNo"></span></p>
+        <p><strong>User Type:</strong> <span id="viewType"></span></p>
+        <p><strong>Address:</strong> <span id="viewAddress"></span></p>
+        <p><strong>City:</strong> <span id="viewCity"></span></p>
+        <p><strong>Pincode:</strong> <span id="viewPincode"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./JS/adminuserdetails.js"></script>
+</body>
+
+</html>
