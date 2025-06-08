@@ -1,5 +1,4 @@
 import { CartItem, Category, Product, User } from "./model";
-
 namespace Demo {
   export namespace ECommerce {
     export class PageUtils {

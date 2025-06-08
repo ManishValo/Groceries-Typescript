@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Demo;
 (function (Demo) {
     let ECommerce;
@@ -218,3 +216,4 @@ var Demo;
 })(Demo || (Demo = {}));
 // Initialize on load
 Demo.ECommerce.PageUtils.init();
+export {};

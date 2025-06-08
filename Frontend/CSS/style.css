@@ -1,0 +1,545 @@
+/* Reset and Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  height: 100vh;
+}
+
+/* Header Section */
+header section {
+  background-color: #ffcccb;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+#title {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+marquee {
+  font-size: 16px;
+  color: #ff5733;
+  font-weight: bold;
+}
+
+/* Navbar */
+
+
+.icon h1 {
+  color: #6a45c2;
+  padding-left: 20px;
+  margin-right: 30px;
+}
+
+.nav-bar {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000; 
+}
+
+.nav-bar .left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-bar .nav-toggle {
+    display: none;
+    cursor: pointer;
+}
+
+.nav-links ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.nav-links ul li a:hover {
+    color: #ff5733;
+}
+
+
+
+.search-container {
+  margin-left: 25px;
+  position: relative;
+  width: 271px;
+}
+
+#search-input {
+  width: 100%;
+  padding: 8px 10px;
+  padding-right: 40px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+}
+
+#search-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #6a45c2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+#search-btn:hover {
+  background-color: #5630a1;
+}
+
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.nav-bar ul li {
+    position: relative;
+}
+
+.nav-bar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.nav-bar ul li a:hover {
+  background-color: #ff8d8d;
+  color: white;
+}
+
+/* Dropdown */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 999;
+  min-width: 120px;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  color: #333;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+} 
+
+
+
+.middle{
+    margin-left: auto;
+}
+
+.middle i {
+  font-size: 24px;
+  margin-right: 20px;
+}
+
+/* .user-menu {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-icon {
+  font-size: 28px;
+  color: #444;
+  user-select: none;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 35px; 
+  right: 0;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  border-radius: 5px;
+  min-width: 120px;
+  padding: 8px 0;
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 15px;
+  border: none;
+  background: none;
+  text-align: left;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+} */
+
+
+.right button {
+  margin-left: 10px;
+  padding: 8px 14px;
+  background-color: #ff5733;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.right button:hover {
+  background-color: #e24d29;
+}
+
+/* Main Section */
+main.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+/* Video */
+.video-container {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  background: none;
+  padding: 0;
+}
+
+.video-container video {
+  width: 100%;
+  height: 300px;
+  display: block;
+  /* object-fit: contain;  */
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+
+/* Sidebar */
+/*.sidebar {
+  width: 200px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-right: 20px;
+  height: fit-content;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+  color: #6933ff;
+}
+*/
+/* Product Grid */
+.product-container {
+   display: flex;
+   flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Product Card */
+.product-card {
+  width: 15%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  height: 400px; 
+}
+
+/* Product Card Hover Effect */
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;              
+  object-fit: contain;        
+  border-radius: 6px;
+  margin-bottom: 15px;
+  background-color: #f5f5f5;  
+  padding: 10px;             
+}
+
+.product-card h2 {
+  font-size: 18px;
+  margin-bottom: 10px; 
+}
+
+/* Bucket - Price and Button */
+.bucket {
+  display: flex;
+  flex-direction: column; 
+  gap: 15px; 
+  align-items: center; 
+  margin-top: auto; 
+}
+
+.bucket p {
+  color: #ff5733;
+  font-weight: bold;
+  margin: 0; 
+}
+
+.bag {
+  background-color: #e15bfc;
+  color: white;
+  padding: 10px 20px; 
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 100%; 
+  max-width: 150px; 
+  margin-top: 15px; 
+}
+
+.bag:hover {
+  background-color: #e24d29;
+}
+
+
+#innovation-section p{
+  font-size: 1rem; 
+  color: #555; 
+  line-height: 1.6;
+   margin-top: 10px;
+}
+
+#innovation-section button{
+  margin-top: 20px; 
+  padding: 12px 24px; 
+  background: #000;
+   color: #fff; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer;
+}
+
+#innovation-section img{
+  width: 40%; 
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+  margin-right: 40px;
+}
+
+/* Footer — stays as your original HTML structure */
+.footer-class{
+    gap: 30px;
+    margin-top: 20px;
+    background: rgb(245, 194, 127);
+    padding: 15px;
+    width: 100%;
+}
+.fo{
+    display: flex;
+    justify-content: center;
+}
+
+.category{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.col {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.col h4 {
+  margin-bottom: 10px;
+  color: #ff5733;
+}
+
+.col ul {
+  list-style: none;
+}
+
+.col ul li {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.social-icons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-icons i {
+  font-size: 24px;
+  margin: 0 10px;
+  color: #000000;
+  transition: transform 0.3s;
+}
+
+.social-icons i:hover {
+  transform: scale(1.2);
+}
+
+.footer-class p {
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Add to Cart Button Style */
+.add-to-cart-btn {
+  background-color: #e15bfc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 150px; 
+  margin: 9px auto;
+}
+  /*margin-top: 15px; 
+}*/
+
+.add-to-cart-btn:hover {
+  background-color: orange;
+}
+
+
+/* @media (max-width: 1024px) {
+  .product-card {
+    width: 30%;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card {
+    width: 100%;
+  }
+
+  .search-container {
+    margin-bottom: 10px;
+  }
+} */
+
+
+/* .search-container {
+  position: relative;
+  width: 300px; Adjust the width as needed */
+
+
+/* .view-all-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#viewAllBtn {
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  background-color: #6a45c2;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#viewAllBtn:hover {
+  background-color: #5630a1;
+} */
+
+
+/* Media Query for smaller screens 
+@media (max-width: 768px) {
+  .nav-bar ul {
+    flex-direction: column;  
+    align-items: center;
+  }
+
+  .nav-bar ul li {
+    margin-bottom: 10px;  
+  }
+
+  /* Adjust Signup and Login buttons to stack vertically */
+  /* .right {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .right button {
+    width: 100%;  
+    margin-bottom: 10px;  
+  }
+  
+  /* Adjust the layout of the navbar's left section */
+  /* .nav-bar .left {
+    margin-bottom: 20px;
+  }
+} */ 
+
+
