@@ -1,198 +1,172 @@
-// Wait until the DOM is fully loaded
-$(document).ready(function () {
-  // Get logged-in user from sessionStorage
-  const userJson = sessionStorage.getItem("loggedInUser");
-  const user = userJson ? JSON.parse(userJson) : null;
-
-  // Get reference to the DOM element where the user info will be displayed
-  const userText = document.getElementById('user-text');
-
-  // If the user is logged in, show welcome message and logout link
-  if (user) {
-    $("#user-text").html(`Welcome, ${user.name} &nbsp;|&nbsp; 
-      <span id="logout-link" style="text-decoration: underline; cursor: pointer;">Logout</span>`);
-  }
-
-  // Logout click event – clears session and redirects to home
-  $(document).on("click", "#logout-link", function () {
-    if (confirm("Are you sure you want to logout?")) {
-      sessionStorage.removeItem("loggedInUser");
-      window.location.href = "index.html";
-    }
-  });
-
-  // Extract user ID from the logged-in user
-  const userId = user.UserID;
-
-  // API endpoint to fetch user's cart items
-  const apiUrl = `http://localhost:58731/api/cart/user/${userId}`;
-
-  // Function to load all cart items from server
-  function loadCart() {
-    $.ajax({
-      url: apiUrl,
-      method: "GET",
-      success: function (cartItems) {
-        const container = $("#cart-items-container");
-        container.empty(); // Clear existing items
-
-        // If cart is empty, show empty message and hide total
-        if (!cartItems || cartItems.length === 0) {
-          $(".empty-cart-message").show();
-          $("#cart-total").hide();
-        } else {
-          $(".empty-cart-message").hide();
-          $("#cart-total").show();
+"use strict";
+var Demo;
+(function (Demo) {
+    var Models;
+    (function (Models) {
+        class CartItem {
         }
-
-        // Redundant safety visibility logic
-        $(".empty-cart-message").addClass("hidden");
-        $("#cart-total").show();
-
-        let totalAmount = 0; // Initialize total amount
-
-        // Loop through each item and append it to cart container
-        cartItems.forEach(item => {
-          totalAmount += item.TotalPrice;
-
-          const card = `
-            <div class="cart-card" style="display:flex;gap:1rem;border:1px solid #ccc;padding:1rem;margin-bottom:1rem;">
-              <img src="/images/${item.ProductImg}" alt="${item.ProductName}" style="width:100px;height:100px; object-fit: contain;">
+        Models.CartItem = CartItem;
+        class User {
+        }
+        Models.User = User;
+    })(Models = Demo.Models || (Demo.Models = {}));
+})(Demo || (Demo = {}));
+(function (Demo) {
+    var CartModule;
+    (function (CartModule) {
+        const $ = jQuery;
+        class CartManager {
+            constructor() {
+                this.apiBaseUrl = "http://localhost:58731/api/cart";
+                this.userId = null;
+                this.$cartItemsContainer = $("#cart-items-container");
+                this.$emptyCartMessage = $(".empty-cart-message");
+                this.$cartTotal = $("#cart-total");
+                this.$cartTotalAmount = $("#cart-total-amount");
+                const userJson = sessionStorage.getItem("loggedInUser");
+                this.user = userJson ? JSON.parse(userJson) : null;
+                if (!this.user) {
+                    alert("Please login to view your cart.");
+                    window.location.href = "login.html";
+                    return;
+                }
+                this.userId = this.user.UserID;
+                this.loadCart();
+                this.bindEvents();
+            }
+            bindEvents() {
+                $(document).on("click", ".qty-btn", (e) => this.updateQuantity(e));
+                $(document).on("click", ".remove-btn", (e) => this.removeItem(e));
+                $("#checkout-btn").on("click", () => this.checkout());
+            }
+            loadCart() {
+                $.ajax({
+                    url: `${this.apiBaseUrl}/user/${this.userId}`,
+                    method: "GET",
+                    success: (cartItems) => this.renderCart(cartItems),
+                    error: () => this.renderEmptyCart("Failed to load cart items"),
+                });
+            }
+            renderCart(cartItems) {
+                this.$cartItemsContainer.empty();
+                if (!cartItems.length) {
+                    this.renderEmptyCart();
+                    return;
+                }
+                this.$emptyCartMessage.hide();
+                this.$cartTotal.show();
+                let totalAmount = 0;
+                cartItems.forEach((item) => {
+                    totalAmount += item.TotalPrice;
+                    const cardHtml = `
+          <div class="cart-card" style="display:flex;gap:1rem;border:1px solid #ccc;padding:1rem;margin-bottom:1rem;">
+            <img src="/frontend/images/${item.ProductImg}" alt="${item.ProductName}" style="width:100px;height:100px; object-fit: contain;">
+            <div>
+              <h3>${item.ProductName}</h3>
+              <p>Price: ₹${item.ProductPrice.toFixed(2)}</p>
               <div>
-                <h3>${item.ProductName}</h3>
-                <p>Price: ₹${item.ProductPrice}</p>
-                <div>
-                  Quantity:
-                  <button class="qty-btn decrease" data-id="${item.CartID}" data-qty="${item.CartQty}" data-price="${item.ProductPrice}">−</button>
-                  <span class="cart-qty">${item.CartQty}</span>
-                  <button class="qty-btn increase" data-id="${item.CartID}" data-qty="${item.CartQty}" data-price="${item.ProductPrice}">+</button>
-                </div>
-                <p>Total: ₹${item.TotalPrice}</p>
-                <button class="remove-btn" data-id="${item.CartID}" style="background-color: #ff4d4d; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px;">Remove</button>
+                Quantity:
+                <button class="qty-btn decrease" data-id="${item.CartID}" data-qty="${item.CartQty}" data-price="${item.ProductPrice}">−</button>
+                <span class="cart-qty">${item.CartQty}</span>
+                <button class="qty-btn increase" data-id="${item.CartID}" data-qty="${item.CartQty}" data-price="${item.ProductPrice}">+</button>
               </div>
+              <p>Total: ₹${item.TotalPrice.toFixed(2)}</p>
+              <button class="remove-btn" data-id="${item.CartID}" style="background-color: #ff4d4d; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px;">Remove</button>
             </div>
-          `;
-
-          container.append(card); // Append card to container
-        });
-
-        // Show total amount at the bottom
-        $("#cart-total-amount").text(`Total: ₹${totalAmount}`);
-      },
-      error: function (xhr) {
-        // On error, show empty state
-        const container = $("#cart-items-container");
-        container.empty();
-        $(".empty-cart-message").removeClass("hidden");
-        $("#cart-total").hide();
-        $(".cart-count").text(0); 
-      }
-    });
-  }
-
-  // Handle quantity increase/decrease buttons
-  $(document).on("click", ".qty-btn", function () {
-    const cartId = $(this).data("id");
-    let qty = parseInt($(this).data("qty"));
-    const unitPrice = parseFloat($(this).data("price"));
-    const isIncrease = $(this).hasClass("increase");
-
-    // Increase or decrease quantity
-    if (isIncrease) {
-      qty += 1;
-    } else {
-      if (qty <= 1) {
-        alert("Minimum quantity is 1.");
-        return;
-      }
-      qty -= 1;
-    }
-
-    // Prepare updated cart object
-    const updatedCart = {
-      CartID: cartId,
-      CartQty: qty,
-      TotalPrice: qty * unitPrice
-    };
-
-    // Send updated quantity to server via PUT
-    $.ajax({
-      url: "http://localhost:58731/api/cart/update",
-      method: "PUT",
-      contentType: "application/json",
-      data: JSON.stringify(updatedCart),
-      success: function () {
-        loadCart();                // Reload cart UI
-        updateCartIconFromServer(); // Update cart count
-      },
-      error: function () {
-        alert("Failed to update cart quantity.");
-      }
-    });
-  });
-
-  // Handle item removal
-  $(document).on("click", ".remove-btn", function () {
-    const cartId = $(this).data("id");
-
-    // Call API to delete the cart item
-    $.ajax({
-      url: `http://localhost:58731/api/cart/delete/${cartId}`,
-      method: "DELETE",
-      success: function () {
-        loadCart();                // Refresh cart display
-        updateCartIconFromServer(); // Update cart count
-      },
-      error: function () {
-        alert("Failed to remove item.");
-      }
-    });
-  });
-
-  // Updates the cart count in the navbar/cart icon
-  function updateCartIconFromServer() {
-    $.ajax({
-      url: `http://localhost:58731/api/cart/user/${userId}`,
-      method: "GET",
-      success: function (cartItems) {
-        const totalCount = cartItems.reduce((sum, item) => sum + item.CartQty, 0);
-        $(".cart-count").text(totalCount);
-      },
-      error: function () {
-        $(".cart-count").text(0); // On error, show 0
-      }
-    });
-  }
-
-  // Initially load cart on page load
-  loadCart();
-
-  // Handle checkout button click
-  $("#checkout-btn").on("click", function () {
-    // Verify cart has items before redirecting to payment
-    $.ajax({
-      url: `http://localhost:58731/api/cart/user/${userId}`,
-      method: "GET",
-      success: function (cartItems) {
-        console.log(cartItems)
-        if (cartItems.length === 0) {
-          alert("Your cart is empty. Please add items before proceeding.");
-          return;
+          </div>`;
+                    this.$cartItemsContainer.append(cardHtml);
+                });
+                this.$cartTotalAmount.text(`Total: ₹${totalAmount.toFixed(2)}`);
+                // CartManager.updateCartIcon(cartItems.reduce((sum, i) => sum + i.CartQty, 0));
+            }
+            renderEmptyCart(message) {
+                if (message)
+                    console.error(message);
+                this.$cartItemsContainer.empty();
+                this.$emptyCartMessage.show();
+                this.$cartTotal.hide();
+                // CartManager.updateCartIcon(0);
+            }
+            updateQuantity(event) {
+                const $btn = $(event.currentTarget);
+                const cartId = Number($btn.data("id"));
+                let qty = Number($btn.data("qty"));
+                const unitPrice = Number($btn.data("price"));
+                const isIncrease = $btn.hasClass("increase");
+                qty = isIncrease ? qty + 1 : qty - 1;
+                if (qty < 1)
+                    return alert("Minimum quantity is 1.");
+                const updatedCart = {
+                    CartID: cartId,
+                    CartQty: qty,
+                    TotalPrice: qty * unitPrice,
+                };
+                $.ajax({
+                    url: `${this.apiBaseUrl}/update`,
+                    method: "PUT",
+                    contentType: "application/json",
+                    data: JSON.stringify(updatedCart),
+                    success: () => this.loadCart(),
+                    error: () => alert("Failed to update cart quantity."),
+                });
+            }
+            removeItem(event) {
+                const cartId = Number($(event.currentTarget).data("id"));
+                $.ajax({
+                    url: `${this.apiBaseUrl}/delete/${cartId}`,
+                    method: "DELETE",
+                    success: () => this.loadCart(),
+                    error: () => alert("Failed to remove item."),
+                });
+            }
+            checkout() {
+                $.ajax({
+                    url: `${this.apiBaseUrl}/user/${this.userId}`,
+                    method: "GET",
+                    success: (cartItems) => {
+                        if (!cartItems.length) {
+                            alert("Your cart is empty.");
+                            return;
+                        }
+                        const outOfStock = cartItems.filter((item) => { var _a; return ((_a = item.ProductQuantity) !== null && _a !== void 0 ? _a : 0) < item.CartQty; });
+                        if (outOfStock.length > 0) {
+                            alert(`Out of stock: ${outOfStock.map(i => i.ProductName).join(", ")}`);
+                            return;
+                        }
+                        window.location.href = "paymentgateway.html";
+                    },
+                    error: () => alert("Could not validate cart before checkout."),
+                });
+            }
         }
-
-      const outOfStockItems = cartItems.filter(item => item.ProductQuantity < item.CartQty);
-      if (outOfStockItems.length > 0) {
-        const names = outOfStockItems.map(i => i.ProductName).join(", ");
-        alert(`The following products are out of stock: ${names}`);
-        return;
-      }
-
-        // Proceed to payment page
-        window.location.href = "paymentgateway.html";
-      },
-      error: function () {
-        alert("Could not validate cart before checkout.");
-      }
-    });
-  });
-});
+        CartModule.CartManager = CartManager;
+        function updateUserSection() {
+            // console.log("Updating user section...");
+            const userText = document.getElementById("user-text");
+            const userJson = sessionStorage.getItem("loggedInUser");
+            const user = userJson ? JSON.parse(userJson) : null;
+            if (user === null || user === void 0 ? void 0 : user.name) {
+                userText.innerHTML = `
+      Welcome, ${user.name} &nbsp;|&nbsp; |
+      <span id="spanLogout" class="logout" style="cursor:pointer; text-decoration:underline;">Logout</span>
+    `;
+                document.getElementById("spanLogout").onclick = logout;
+            }
+            else {
+                userText.innerHTML = `
+      <a href="signup.html" class="text-white text-decoration-none me-2">Sign up</a> /
+      <a href="login.html" class="text-white text-decoration-none">Login</a>
+    `;
+            }
+        }
+        CartModule.updateUserSection = updateUserSection;
+        function logout() {
+            sessionStorage.removeItem("loggedInUser");
+            window.location.href = "login.html";
+        }
+        $(() => {
+            new CartManager();
+            updateUserSection(); // call it here!
+        });
+    })(CartModule = Demo.CartModule || (Demo.CartModule = {}));
+})(Demo || (Demo = {}));
