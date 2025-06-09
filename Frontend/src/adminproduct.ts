@@ -1,5 +1,3 @@
-// adminproduct.ts
-
 namespace Demo {
   export namespace Admin {
     export class Adminproduct {

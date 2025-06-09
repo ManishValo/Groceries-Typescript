@@ -29,7 +29,7 @@ namespace Demo {
                         $('#userTable tbody').html(rows);
 
                         $('#userTable').on("click","button[data-user]",(e)=>{
-                            const userJSOn=$(e.currentTarget).attr("data-user")
+                            const userJSOn:string|undefined=$(e.currentTarget).attr("data-user")
                             if(userJSOn){
                                 const user=JSON.parse(userJSOn);
                                 Demo.UserDetails.AdminUserDetails.viewUser(user)

@@ -1,8 +1,11 @@
-"use strict";
 var Demo;
 (function (Demo) {
     let BillDetailsPage;
     (function (BillDetailsPage) {
+        // interface LoggedInUser {
+        //   UserID: number;
+        //   name: string;
+        // }
         class BillPage {
             constructor() {
                 this.apiBaseUrl = "http://localhost:58731/api";
@@ -86,7 +89,7 @@ var Demo;
         BillDetailsPage.BillPage = BillPage;
     })(BillDetailsPage = Demo.BillDetailsPage || (Demo.BillDetailsPage = {}));
 })(Demo || (Demo = {}));
-// Instantiate the page logic once DOM is ready
 $(() => {
     new Demo.BillDetailsPage.BillPage();
 });
+export {};

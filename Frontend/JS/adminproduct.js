@@ -1,5 +1,4 @@
 "use strict";
-// adminproduct.ts
 var Demo;
 (function (Demo) {
     let Admin;

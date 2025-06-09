@@ -1,8 +1,9 @@
-"use strict";
+import { helper } from "./helper";
 var Demo;
 (function (Demo) {
     let Typescript;
     (function (Typescript) {
+        let help = new helper.Helper();
         class SignupHandler {
             constructor() {
                 $(() => {
@@ -12,7 +13,7 @@ var Demo;
                         const email = $('#email').val().trim();
                         const password = $('#password').val().trim();
                         const confirmPassword = $('#confirm-password').val().trim();
-                        if (!this.isValid(fullName) || !this.isValid(email) || !this.isValid(password) || !this.isValid(confirmPassword)) {
+                        if (!help.isValid(fullName) || !help.isValid(email) || !help.isValid(password) || !help.isValid(confirmPassword)) {
                             alert("All fields are required.");
                             return;
                         }
@@ -50,31 +51,6 @@ var Demo;
                         });
                     });
                 });
-            }
-            isValid(attribute) {
-                let isValid = false;
-                try {
-                    if (attribute !== null &&
-                        attribute !== undefined &&
-                        attribute !== "undefined" &&
-                        attribute !== "null" &&
-                        attribute !== "") {
-                        isValid = true;
-                    }
-                }
-                catch (ex) {
-                    this.throwError(ex.message);
-                }
-                return isValid;
-            }
-            throwError(error) {
-                try {
-                    const errorMessage = "Error: " + (error.description || error.message);
-                    alert(errorMessage);
-                }
-                catch (ex) {
-                    alert("Error: " + (ex.description || ex.message));
-                }
             }
         }
         Typescript.SignupHandler = SignupHandler;

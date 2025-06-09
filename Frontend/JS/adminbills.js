@@ -1,8 +1,8 @@
 "use strict";
 var Demo;
 (function (Demo) {
-    let Typescript;
-    (function (Typescript) {
+    let AdminBillDetails;
+    (function (AdminBillDetails) {
         class BillManager {
             constructor() {
                 this.BASE_URL = "http://localhost:58731/api/bill";
@@ -20,11 +20,11 @@ var Demo;
                             rows += `
                                 <tr>
                                     <td>${bill.OrderID}</td>
-                                    <td>${bill.UserID}</td>
                                     <td>${bill.CustomerName}</td>
+                                    <td>${bill.OrderDate.split("T")[0]}</td>
                                     <td>${bill.OrderAmt}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-info" onclick="Demo.Typescript.billManager.viewBill(${bill.OrderID})">View</button>
+                                        <button class="btn btn-sm btn-info" onclick="billManager.viewBill(${bill.OrderID})">View</button>
                                     </td>
                                 </tr>
                             `;
@@ -69,8 +69,8 @@ var Demo;
                 });
             }
         }
-        Typescript.BillManager = BillManager;
+        AdminBillDetails.BillManager = BillManager;
         // Global instance to allow access from onclick="..."
-        Typescript.billManager = new BillManager();
-    })(Typescript = Demo.Typescript || (Demo.Typescript = {}));
+        window.billManager = new BillManager();
+    })(AdminBillDetails = Demo.AdminBillDetails || (Demo.AdminBillDetails = {}));
 })(Demo || (Demo = {}));

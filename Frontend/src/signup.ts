@@ -1,6 +1,9 @@
+import {helper} from "./helper"
 namespace Demo {
     export namespace Typescript {
+        let help=new helper.Helper()
         export class SignupHandler {
+            
             constructor() {
                 $(() => {
                     $('#signup-form').on("submit", (e: JQuery.Event) => {
@@ -11,7 +14,7 @@ namespace Demo {
                         const password = ($('#password').val() as string).trim();
                         const confirmPassword = ($('#confirm-password').val() as string).trim();
 
-                        if (!this.isValid(fullName) || !this.isValid(email) || !this.isValid(password) || !this.isValid(confirmPassword)) {
+                        if (!help.isValid(fullName) || !help.isValid(email) || !help.isValid(password) || !help.isValid(confirmPassword)) {
                             alert("All fields are required.");
                             return;
                         }
@@ -53,32 +56,32 @@ namespace Demo {
                 });
             }
 
-            isValid(attribute: any): boolean {
-                let isValid = false;
-                try {
-                    if (
-                        attribute !== null &&
-                        attribute !== undefined &&
-                        attribute !== "undefined" &&
-                        attribute !== "null" &&
-                        attribute !== ""
-                    ) {
-                        isValid = true;
-                    }
-                } catch (ex: any) {
-                    this.throwError(ex.message);
-                }
-                return isValid;
-            }
+            // isValid(attribute: any): boolean {
+            //     let isValid = false;
+            //     try {
+            //         if (
+            //             attribute !== null &&
+            //             attribute !== undefined &&
+            //             attribute !== "undefined" &&
+            //             attribute !== "null" &&
+            //             attribute !== ""
+            //         ) {
+            //             isValid = true;
+            //         }
+            //     } catch (ex: any) {
+            //         this.throwError(ex.message);
+            //     }
+            //     return isValid;
+            // }
 
-            throwError(error: any): void {
-                try {
-                    const errorMessage = "Error: " + (error.description || error.message);
-                    alert(errorMessage);
-                } catch (ex: any) {
-                    alert("Error: " + (ex.description || ex.message));
-                }
-            }
+            // throwError(error: any): void {
+            //     try {
+            //         const errorMessage = "Error: " + (error.description || error.message);
+            //         alert(errorMessage);
+            //     } catch (ex: any) {
+            //         alert("Error: " + (ex.description || ex.message));
+            //     }
+            // }
         }
     }
 }

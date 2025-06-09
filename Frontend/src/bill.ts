@@ -1,3 +1,5 @@
+import { User } from "./model";
+
 namespace Demo {
   export namespace BillDetailsPage {
 
@@ -8,14 +10,14 @@ namespace Demo {
       TotalPrice: number;
     }
 
-    interface LoggedInUser {
-      UserID: number;
-      name: string;
-    }
+    // interface LoggedInUser {
+    //   UserID: number;
+    //   name: string;
+    // }
 
-    export class BillPage {
+     export class BillPage {
       private apiBaseUrl = "http://localhost:58731/api";
-      private user: LoggedInUser | null = null;
+      private user: User | null = null;
       private billId: string | null = null;
       private grandTotal: number = 0;
 
@@ -48,7 +50,7 @@ namespace Demo {
 
       private loadUserFromSession(): void {
         const userJson = sessionStorage.getItem("loggedInUser");
-        this.user = userJson ? JSON.parse(userJson) as LoggedInUser : null;
+        this.user = userJson ? JSON.parse(userJson) as User : null;
       }
 
       private displayUserName(): void {
@@ -110,7 +112,6 @@ namespace Demo {
   }
 }
 
-// Instantiate the page logic once DOM is ready
 $(() => {
-  new Demo.BillDetailsPage.BillPage();
-});
+      new Demo.BillDetailsPage.BillPage();
+    });

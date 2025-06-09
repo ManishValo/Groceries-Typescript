@@ -1,5 +1,5 @@
 namespace Demo {
-    export namespace Typescript {
+    export namespace AdminBillDetails {
         export class BillManager {
             BASE_URL: string = "http://localhost:58731/api/bill";
 
@@ -7,23 +7,24 @@ namespace Demo {
                 $(() => {
                     this.loadBills();
                 });
+
             }
 
             loadBills(): void {
                 $.ajax({
                     url: this.BASE_URL,
-                    type    : "GET",
+                    type: "GET",
                     success: (data: any[]) => {
                         let rows = "";
                         data.forEach((bill: any) => {
                             rows += `
                                 <tr>
                                     <td>${bill.OrderID}</td>
-                                    <td>${bill.UserID}</td>
                                     <td>${bill.CustomerName}</td>
+                                    <td>${bill.OrderDate.split("T")[0]}</td>
                                     <td>${bill.OrderAmt}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-info" onclick="Demo.Typescript.billManager.viewBill(${bill.OrderID})">View</button>
+                                        <button class="btn btn-sm btn-info" onclick="billManager.viewBill(${bill.OrderID})">View</button>
                                     </td>
                                 </tr>
                             `;
@@ -72,10 +73,44 @@ namespace Demo {
                 });
             }
 
-            
+    //         searchBill(): void {
+    //             const orderId = Number($("#searchOrderId").val());
+
+    //             if (!orderId) {
+    //                 alert("Please enter a valid Order ID.");
+    //                 return;
+    //             }
+
+    //             $.ajax({
+    //                 url: `${this.BASE_URL}/${orderId}`,
+    //                 type: "GET",
+    //                 success: (bill: any) => {
+    //                     let row = `
+    //     <tr>
+    //       <td>${bill.OrderID}</td>
+    //       <td>${bill.UserID}</td>
+    //       <td>${bill.CustomerName}</td>
+    //       <td>${bill.OrderDate?.split("T")[0]}</td>
+    //       <td>${bill.OrderAmt}</td>
+    //       <td>
+    //         <button class="btn btn-sm btn-info" onclick="billManager.viewBill(${bill.OrderID})">View</button>
+    //       </td>
+    //     </tr>
+    //   `;
+    //                     $("#billTable tbody").html(row);
+    //                 },
+    //                 error: (xhr) => {
+    //                     alert("Order not found or error fetching data.");
+    //                     $("#billTable tbody").html(""); // Clear previous results
+    //                 }
+    //             });
+    //         }
+
+
+
         }
 
         // Global instance to allow access from onclick="..."
-        export const billManager = new BillManager();
+        (window as any).billManager = new BillManager();
     }
 }
